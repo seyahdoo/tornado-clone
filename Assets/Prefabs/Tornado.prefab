@@ -44,10 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0e05e6f7fad604eb1def8f52ff8354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flyableRuntimeSet: {fileID: 11400000, guid: ad434039309ed5a4c92d965970715e97, type: 2}
   tr: {fileID: 945527921573547473}
-  tornadoEffectDistance: 2
-  tornadoEffectPower: 2000
+  gameSettings: {fileID: 11400000, guid: 589b205cb0b1eef4aace7797599ca2fd, type: 2}
+  flyableRuntimeSet: {fileID: 11400000, guid: ad434039309ed5a4c92d965970715e97, type: 2}
 --- !u!1 &8812903793384757502
 GameObject:
   m_ObjectHideFlags: 0

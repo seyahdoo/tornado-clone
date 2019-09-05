@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class Tornado : MonoBehaviour
 {
-
-    public FlyableRuntimeSet flyableRuntimeSet;
     public Transform tr;
 
-    public float tornadoEffectDistance;
-    public float tornadoEffectPower;
+    public GameSettings gameSettings;
+    public FlyableRuntimeSet flyableRuntimeSet;
 
     void FixedUpdate()
     {
@@ -18,8 +16,8 @@ public class Tornado : MonoBehaviour
             flyable.rb.AddForce
                 (
                     (flyable.tr.position - tr.position).normalized
-                    * (Mathf.Clamp(tornadoEffectDistance / Vector3.Distance(flyable.tr.position, tr.position), 1f, float.MaxValue) - 1f)
-                    * tornadoEffectPower
+                    * (Mathf.Clamp(gameSettings.tornadoEffectDistance / Vector3.Distance(flyable.tr.position, tr.position), 1f, float.MaxValue) - 1f)
+                    * gameSettings.tornadoEffectPower
                     , ForceMode.Force
                 );
 

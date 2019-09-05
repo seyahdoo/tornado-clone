@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class Car : MonoBehaviour
 {
-
+    public Transform tr;
+    public Transform guide;
+    
+    public GameSettings gameSettings;
     public CarPath path;
 
-    public float speed = 1f;
     public float guideDistance = 1f;
 
-
-    public int checkpointCount = 0;
-    public Transform guide;
-
-    public Transform tr;
+    private int checkpointCount = 0;
 
     private void Start()
     {
@@ -27,17 +25,17 @@ public class Car : MonoBehaviour
     {
         Transform target = path.checkpoints[checkpointCount].transform;
 
-        if (Vector3.Distance(target.position, guide.position) < (speed * Time.deltaTime))
+        if (Vector3.Distance(target.position, guide.position) < (gameSettings.carSpeed * Time.deltaTime))
         {
             checkpointCount += 1;
             checkpointCount %= path.checkpoints.Length;
         }
 
         guide.LookAt(target);
-        guide.position += guide.forward * speed * Time.deltaTime;
+        guide.position += guide.forward * gameSettings.carSpeed * Time.deltaTime;
 
         tr.LookAt(guide);
-        tr.position += tr.forward * speed * Time.deltaTime;
+        tr.position += tr.forward * gameSettings.carSpeed * Time.deltaTime;
 
         guide.position += guide.forward * (guideDistance - Vector3.Distance(guide.position, tr.position));
 
