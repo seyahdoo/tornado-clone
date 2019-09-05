@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Flyable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public FlyableRuntimeSet runtimeSet;
+    public Rigidbody rb;
+    public Transform tr;
+
+    private void OnEnable()
     {
-        
+        runtimeSet.flyables.Add(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        runtimeSet.flyables.Remove(this);
     }
+
 }
