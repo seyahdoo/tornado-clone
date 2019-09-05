@@ -37,6 +37,9 @@ public class Car : MonoBehaviour
 
         tr.LookAt(guide);
         tr.position += tr.forward * speed * Time.deltaTime;
+
+        guide.position += guide.forward * (guideDistance - Vector3.Distance(guide.position, tr.position));
+
     }
 
 
