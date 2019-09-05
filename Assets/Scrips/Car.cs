@@ -26,6 +26,7 @@ public class Car : MonoBehaviour
     private void Update()
     {
         Transform target = path.checkpoints[checkpointCount].transform;
+
         if (Vector3.Distance(target.position, guide.position) < (speed * Time.deltaTime))
         {
             checkpointCount += 1;
