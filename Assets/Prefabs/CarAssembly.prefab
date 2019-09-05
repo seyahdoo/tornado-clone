@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3974071470155421570}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CarAssembly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 2898656562748510659}
   - component: {fileID: 2898656562748510671}
   - component: {fileID: 2898656562748510656}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Car
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,6 +159,7 @@ MonoBehaviour:
   guide: {fileID: 2898656563351358576}
   gameSettings: {fileID: 11400000, guid: 589b205cb0b1eef4aace7797599ca2fd, type: 2}
   path: {fileID: 0}
+  gameDirector: {fileID: 0}
   guideDistance: 1
 --- !u!1 &2898656562839189651
 GameObject:
@@ -169,7 +170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2898656562839189650}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CameraHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +200,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2898656563351358576}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Guide(for car)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

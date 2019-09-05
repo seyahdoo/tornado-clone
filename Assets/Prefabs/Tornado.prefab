@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7569380308124609718}
   - component: {fileID: 7569380308124609713}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tornado
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 6023309345383170206}
   - component: {fileID: 7866070071296909097}
   - component: {fileID: 334684177855177043}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TornadoGraphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}

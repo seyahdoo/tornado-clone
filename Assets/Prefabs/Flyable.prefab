@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1012501047286723980}
   - component: {fileID: 1012501047286723968}
   - component: {fileID: 1012501047286723969}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Flyable
   m_TagString: Untagged
   m_Icon: {fileID: 0}

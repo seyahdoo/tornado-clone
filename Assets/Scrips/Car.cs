@@ -9,6 +9,7 @@ public class Car : MonoBehaviour
     
     public GameSettings gameSettings;
     public CarPath path;
+    public GameDirector gameDirector;
 
     public float guideDistance = 1f;
 
@@ -41,7 +42,10 @@ public class Car : MonoBehaviour
 
     }
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        gameDirector.GameOver();
+    }
 
 
 }
