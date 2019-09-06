@@ -12,6 +12,10 @@ public class GameSettings : ScriptableObject
     public float tornadoEffectDistance;
     public float tornadoEffectPower;
 
+    public float tornadoControllSpeed = 400f;
+    public float tornadoControllXSpeed = 1f;
+    public float tornadoControllYSpeed = 5f;
+
     public SceneReference[] levels;
 
 }

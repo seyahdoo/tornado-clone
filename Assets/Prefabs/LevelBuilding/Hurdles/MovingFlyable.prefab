@@ -126,3 +126,5 @@ MonoBehaviour:
   rb: {fileID: 2152824526023986838}
   tr: {fileID: 2152824526023986837}
   speed: {x: 1, y: 0, z: 0}
+  lastSpeedChange: 0
+  speedChangeCooldown: 0.3

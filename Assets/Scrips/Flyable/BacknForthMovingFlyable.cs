@@ -6,7 +6,8 @@ public class BacknForthMovingFlyable : Flyable
 {
 
     public Vector3 speed = Vector3.right;
-
+    public float lastSpeedChange = 0f;
+    public float speedChangeCooldown = .3f;
 
     private void Update()
     {
@@ -18,7 +19,11 @@ public class BacknForthMovingFlyable : Flyable
 
     private void OnCollisionEnter(Collision collision)
     {
-        speed *= -1;
+        if(Time.time - lastSpeedChange > speedChangeCooldown)
+        {
+            lastSpeedChange = Time.time;
+            speed *= -1;
+        }
     }
 
 }

@@ -12,9 +12,7 @@ public class TornadoController : MonoBehaviour
     public Vector2 touchStartMousePosition;
     public Vector2 mouseDelta;
 
-    public float tornadoControllSpeed = 1f;
-    public float tornadoControllXSpeed = 1f;
-    public float tornadoControllYSpeed = 1f;
+    public GameSettings gameSettings;
 
     void Update()
     {
@@ -32,12 +30,12 @@ public class TornadoController : MonoBehaviour
         }
 
         Vector3 posChangeForThisFrame =
-            cam.forward.normalized * (mouseDelta.y / Screen.height) * tornadoControllYSpeed
-            + cam.right.normalized * (mouseDelta.x / Screen.width ) * tornadoControllXSpeed;
+            cam.forward.normalized * (mouseDelta.y / Screen.height) * gameSettings.tornadoControllYSpeed
+            + cam.right.normalized * (mouseDelta.x / Screen.width ) * gameSettings.tornadoControllXSpeed;
 
         posChangeForThisFrame.y = 0f;
 
-        tr.position += posChangeForThisFrame * tornadoControllSpeed * Time.deltaTime;
+        tr.position += posChangeForThisFrame * gameSettings.tornadoControllSpeed * Time.deltaTime;
 
     }
 
