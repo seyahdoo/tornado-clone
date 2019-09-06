@@ -24,6 +24,7 @@ public class GameDirector : MonoBehaviour
 
     private void Start()
     {
+        //Load first level on game start
         StartCoroutine(
             SwitchLevel(
                 gameSettings.levels[0], 0f));
@@ -31,18 +32,19 @@ public class GameDirector : MonoBehaviour
 
     public IEnumerator SwitchLevel(SceneReference newlevel, float delay)
     {
+        //dont reenter this routine while its working
         if (switchingLevel) yield break;
-
         switchingLevel = true;
+
         yield return new WaitForSeconds(delay);
 
-        ClearUI();
-
+        //Disable car and tornado, so there is no unnessesary interaction(collision and triggering) on load time
         car.gameObject.SetActive(false);
         tornadoPhysics.gameObject.SetActive(false);
 
         AsyncOperation op;
 
+        //if there is an already loaded old level, UNLOAD old level
         if(currentlyLoadedLevelPath.Length >= 1)
         {
             op = SceneManager.UnloadSceneAsync(currentlyLoadedLevelPath, UnloadSceneOptions.None);
@@ -50,9 +52,9 @@ public class GameDirector : MonoBehaviour
             {
                 yield return new WaitForEndOfFrame();
             }
-
         }
 
+        //LOAD new level
         op = SceneManager.LoadSceneAsync(newlevel.ScenePath, LoadSceneMode.Additive);
         while (!op.isDone)
         {
@@ -61,30 +63,37 @@ public class GameDirector : MonoBehaviour
 
         currentlyLoadedLevelPath = newlevel.ScenePath;
 
+        //place car and enable it
+        car.SetNewPath(FindObjectOfType<CarPath>());
         car.gameObject.SetActive(true);
-        CarPath path = FindObjectOfType<CarPath>();
-        car.SetNewPath(path);
 
+        //place tornado and enable it
         tornadoController.enabled = false;
+        tornadoPhysics.enabled = false;
+        tornadoPhysics.tr.position = FindObjectOfType<TornadoStartPoint>().transform.position;
         tornadoPhysics.gameObject.SetActive(true);
-        TornadoStartPoint tornadoStartPoint = FindObjectOfType<TornadoStartPoint>();
-        tornadoPhysics.transform.position = tornadoStartPoint.transform.position;
 
-        ClearUI();
-        touchToStartUIObject.SetActive(true);
+        //wait for touch to start the levels
         waitingForTouchToStart = true;
 
+        //"TOUCH TO START" text
+        ClearUI();
+        touchToStartUIObject.SetActive(true);
+
+        //reenter semaphore released
         switchingLevel = false;
     }
 
     private void Update()
     {
+        //Wait for touch to start the game
         if (waitingForTouchToStart)
         {
             if (Input.GetMouseButtonDown(0))
             {
                 waitingForTouchToStart = false;
                 car.StartPathFollowing();
+                tornadoPhysics.enabled = true;
                 tornadoController.enabled = true;
                 ClearUI();
             }
@@ -93,20 +102,25 @@ public class GameDirector : MonoBehaviour
 
     public void LevelFinished()
     {
+        //Pause Game
         car.StopPathFollowing();
         tornadoController.enabled = false;
-        ClearUI();
 
         //load next level
-        //if there is no next level -> GameFinished()
+        //if there is no next level -> "Game Finished"
         currentLevelCount++;
         if (currentLevelCount >= gameSettings.levels.Length)
         {
+            //"GAME FINISHED" text
+            ClearUI();
             gameFinishedUIObject.SetActive(true);
         }
         else
         {
+            //"LEVEL FINISHED" text
+            ClearUI();
             levelFinishedUIObject.SetActive(true);
+
             StartCoroutine(
                 SwitchLevel(
                     gameSettings.levels[currentLevelCount], 1.5f));
@@ -116,8 +130,11 @@ public class GameDirector : MonoBehaviour
 
     public void GameOver()
     {
+        //Pause game
         car.StopPathFollowing();
         tornadoController.enabled = false;
+
+        //"GAME OVER" text
         ClearUI();
         gameOverUIObject.SetActive(true);
 
