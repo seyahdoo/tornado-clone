@@ -19,7 +19,7 @@ public class GameDirector : MonoBehaviour
     public GameObject gameOverUIObject;
     public GameObject touchToStartUIObject;
 
-    public Tornado tornado;
+    public TornadoPhysics tornado;
     public TornadoController tornadoController;
     public Car car;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tornado : MonoBehaviour
+public class TornadoPhysics : MonoBehaviour
 {
     public Transform tr;
 
