@@ -24,7 +24,9 @@ public class GameDirector : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SwitchLevel(gameSettings.levels[0], 0f));
+        StartCoroutine(
+            SwitchLevel(
+                gameSettings.levels[0], 0f));
     }
 
     public IEnumerator SwitchLevel(SceneReference newlevel, float delay)
@@ -44,7 +46,6 @@ public class GameDirector : MonoBehaviour
         if(currentlyLoadedLevelPath.Length >= 1)
         {
             op = SceneManager.UnloadSceneAsync(currentlyLoadedLevelPath, UnloadSceneOptions.None);
-
             while (!op.isDone)
             {
                 yield return new WaitForEndOfFrame();
@@ -93,6 +94,7 @@ public class GameDirector : MonoBehaviour
     public void LevelFinished()
     {
         car.StopPathFollowing();
+        tornadoController.enabled = false;
         ClearUI();
 
         //load next level
@@ -101,25 +103,29 @@ public class GameDirector : MonoBehaviour
         if (currentLevelCount >= gameSettings.levels.Length)
         {
             gameFinishedUIObject.SetActive(true);
-            return;
         }
         else
         {
             levelFinishedUIObject.SetActive(true);
+            StartCoroutine(
+                SwitchLevel(
+                    gameSettings.levels[currentLevelCount], 1.5f));
         }
 
-        StartCoroutine(SwitchLevel(gameSettings.levels[currentLevelCount], 1.5f));
     }
 
     public void GameOver()
     {
         car.StopPathFollowing();
+        tornadoController.enabled = false;
         ClearUI();
         gameOverUIObject.SetActive(true);
 
         //laod first level
         currentLevelCount = 0;
-        StartCoroutine(SwitchLevel(gameSettings.levels[currentLevelCount], 1.5f));
+        StartCoroutine(
+            SwitchLevel(
+                gameSettings.levels[currentLevelCount], 1.5f));
 
     }
 
