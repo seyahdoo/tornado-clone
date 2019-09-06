@@ -17,10 +17,9 @@ public class Car : MonoBehaviour
     private bool followingPath = false;
     private int checkpointCount = 0;
 
-    public void StartPathFollowing(CarPath path)
+    public void SetNewPath(CarPath path)
     {
         this.path = path;
-        followingPath = true;
         checkpointCount = 1;
         tr.position = path.checkpoints[0].transform.position;
         tr.LookAt(path.checkpoints[checkpointCount].transform);
@@ -31,10 +30,14 @@ public class Car : MonoBehaviour
         cameraSmoothFollow.TeleportToDestination();
     }
 
+    public void StartPathFollowing()
+    {
+        followingPath = true;
+    }
+
     public void StopPathFollowing()
     {
         followingPath = false;
-        path = null;
     }
 
     private void Update()

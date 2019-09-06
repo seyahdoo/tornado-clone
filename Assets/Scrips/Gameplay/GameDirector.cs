@@ -12,9 +12,12 @@ public class GameDirector : MonoBehaviour
     public string currentlyLoadedLevelPath = "";
     private bool switchingLevel = false;
 
+    private bool waitingForTouchToStart = false;
+
     public GameObject levelFinishedUIObject;
     public GameObject gameFinishedUIObject;
     public GameObject gameOverUIObject;
+    public GameObject touchToStartUIObject;
 
     public Tornado tornado;
     public Car car;
@@ -59,13 +62,30 @@ public class GameDirector : MonoBehaviour
 
         car.gameObject.SetActive(true);
         CarPath path = FindObjectOfType<CarPath>();
-        car.StartPathFollowing(path);
+        car.SetNewPath(path);
 
         tornado.gameObject.SetActive(true);
         TornadoStartPoint tornadoStartPoint = FindObjectOfType<TornadoStartPoint>();
         tornado.transform.position = tornadoStartPoint.transform.position;
 
+        CleanUI();
+        touchToStartUIObject.SetActive(true);
+        waitingForTouchToStart = true;
+
         switchingLevel = false;
+    }
+
+    private void Update()
+    {
+        if (waitingForTouchToStart)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                waitingForTouchToStart = false;
+                car.StartPathFollowing();
+                CleanUI();
+            }
+        }
     }
 
     public void LevelFinished()
@@ -106,6 +126,7 @@ public class GameDirector : MonoBehaviour
         gameOverUIObject.SetActive(false);
         gameFinishedUIObject.SetActive(false);
         levelFinishedUIObject.SetActive(false);
+        touchToStartUIObject.SetActive(false);
     }
 
 }
