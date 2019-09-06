@@ -366,7 +366,7 @@ MonoBehaviour:
   gameFinishedUIObject: {fileID: 2101749628}
   gameOverUIObject: {fileID: 635667428}
   touchToStartUIObject: {fileID: 1454853819}
-  tornado: {fileID: 671892355}
+  tornadoPhysics: {fileID: 671892355}
   tornadoController: {fileID: 1168783023}
   car: {fileID: 37667333}
 --- !u!4 &776139267
