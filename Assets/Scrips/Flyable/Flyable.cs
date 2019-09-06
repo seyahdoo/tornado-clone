@@ -5,16 +5,16 @@ using UnityEngine;
 public class Flyable : MonoBehaviour
 {
 
-    public FlyableRuntimeSet runtimeSet;
-    public Rigidbody rb;
     public Transform tr;
+    public Rigidbody rb;
+    public FlyableRuntimeSet runtimeSet;
 
-    protected bool isPhysicsDisabled = true;
+    protected bool isKinematic = true;
 
     public void EnablePhysics()
     {
         rb.isKinematic = false;
-        isPhysicsDisabled = false;
+        isKinematic = false;
     }
 
     private void OnEnable()

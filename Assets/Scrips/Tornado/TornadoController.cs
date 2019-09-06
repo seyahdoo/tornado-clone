@@ -8,11 +8,10 @@ public class TornadoController : MonoBehaviour
     public Transform tr;
     public Transform cam;
 
-    public Vector2 oldMousePositon;
-    public Vector2 touchStartMousePosition;
-    public Vector2 mouseDelta;
-
     public GameSettings gameSettings;
+
+    private Vector2 oldMousePositon;
+    private Vector2 mouseDelta;
 
     private void OnEnable()
     {

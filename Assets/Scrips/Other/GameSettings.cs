@@ -8,6 +8,7 @@ public class GameSettings : ScriptableObject
 {
 
     public float carSpeed = 1f;
+    public float carGuideDistance = 1f;
 
     public float tornadoEffectDistance;
     public float tornadoEffectPower;

@@ -11,7 +11,6 @@ public class GameDirector : MonoBehaviour
     private int currentLevelCount = 0;
     public string currentlyLoadedLevelPath = "";
     private bool switchingLevel = false;
-
     private bool waitingForTouchToStart = false;
 
     public GameObject levelFinishedUIObject;
@@ -19,7 +18,7 @@ public class GameDirector : MonoBehaviour
     public GameObject gameOverUIObject;
     public GameObject touchToStartUIObject;
 
-    public TornadoPhysics tornado;
+    public TornadoPhysics tornadoPhysics;
     public TornadoController tornadoController;
     public Car car;
 
@@ -35,10 +34,10 @@ public class GameDirector : MonoBehaviour
         switchingLevel = true;
         yield return new WaitForSeconds(delay);
 
-        CleanUI();
+        ClearUI();
 
         car.gameObject.SetActive(false);
-        tornado.gameObject.SetActive(false);
+        tornadoPhysics.gameObject.SetActive(false);
 
         AsyncOperation op;
 
@@ -66,11 +65,11 @@ public class GameDirector : MonoBehaviour
         car.SetNewPath(path);
 
         tornadoController.enabled = false;
-        tornado.gameObject.SetActive(true);
+        tornadoPhysics.gameObject.SetActive(true);
         TornadoStartPoint tornadoStartPoint = FindObjectOfType<TornadoStartPoint>();
-        tornado.transform.position = tornadoStartPoint.transform.position;
+        tornadoPhysics.transform.position = tornadoStartPoint.transform.position;
 
-        CleanUI();
+        ClearUI();
         touchToStartUIObject.SetActive(true);
         waitingForTouchToStart = true;
 
@@ -86,7 +85,7 @@ public class GameDirector : MonoBehaviour
                 waitingForTouchToStart = false;
                 car.StartPathFollowing();
                 tornadoController.enabled = true;
-                CleanUI();
+                ClearUI();
             }
         }
     }
@@ -94,7 +93,7 @@ public class GameDirector : MonoBehaviour
     public void LevelFinished()
     {
         car.StopPathFollowing();
-        CleanUI();
+        ClearUI();
 
         //load next level
         //if there is no next level -> GameFinished()
@@ -115,7 +114,7 @@ public class GameDirector : MonoBehaviour
     public void GameOver()
     {
         car.StopPathFollowing();
-        CleanUI();
+        ClearUI();
         gameOverUIObject.SetActive(true);
 
         //laod first level
@@ -124,7 +123,7 @@ public class GameDirector : MonoBehaviour
 
     }
 
-    public void CleanUI()
+    public void ClearUI()
     {
         gameOverUIObject.SetActive(false);
         gameFinishedUIObject.SetActive(false);

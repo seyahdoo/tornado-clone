@@ -6,12 +6,12 @@ public class BacknForthMovingFlyable : Flyable
 {
 
     public Vector3 speed = Vector3.right;
-    public float lastSpeedChange = 0f;
+    public float lastSpeedChangeTime = 0f;
     public float speedChangeCooldown = .3f;
 
     private void Update()
     {
-        if (isPhysicsDisabled)
+        if (isKinematic)
         {
             tr.position += speed * Time.deltaTime;
         }
@@ -19,9 +19,9 @@ public class BacknForthMovingFlyable : Flyable
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(Time.time - lastSpeedChange > speedChangeCooldown)
+        if(Time.time - lastSpeedChangeTime > speedChangeCooldown)
         {
-            lastSpeedChange = Time.time;
+            lastSpeedChangeTime = Time.time;
             speed *= -1;
         }
     }
