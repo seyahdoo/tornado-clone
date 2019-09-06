@@ -8,6 +8,10 @@ public class GameDirector : MonoBehaviour
 
     public string[] levels;
 
+    private int currentLevelCount = 0;
+    private string currentlyLoadedLevelName = "";
+    private bool switchingLevel = false;
+
     public GameObject levelFinishedUIObject;
     public GameObject gameFinishedUIObject;
     public GameObject gameOverUIObject;
@@ -15,51 +19,51 @@ public class GameDirector : MonoBehaviour
     public Tornado tornado;
     public Car car;
 
-    public bool finished;
-
     private void Start()
     {
-        StartCoroutine(GameLoop());
+        StartCoroutine(SwitchLevel(levels[0], 0f));
     }
 
-    public IEnumerator GameLoop()
+
+    public void LevelFinished()
     {
+        car.StopPathFollowing();
+        CleanUI();
+
+        //load next level
+        //if there is no next level -> GameFinished()
+        currentLevelCount++;
+        if(currentLevelCount >= levels.Length)
+        {
+            gameFinishedUIObject.SetActive(true);
+            return;
+        }
+        else
+        {
+            levelFinishedUIObject.SetActive(true);
+        }
+
+        StartCoroutine(SwitchLevel(levels[currentLevelCount], 1.5f));
+    }
+
+
+    public IEnumerator SwitchLevel(string newlevel, float delay)
+    {
+        if (switchingLevel) yield break;
+
+        switchingLevel = true;
+        yield return new WaitForSeconds(delay);
+
+        CleanUI();
+
+        car.gameObject.SetActive(false);
+        tornado.gameObject.SetActive(false);
+
         AsyncOperation op;
 
-        while (true)
+        if(currentlyLoadedLevelName.Length > 0)
         {
-            op = SceneManager.LoadSceneAsync(levels[0], LoadSceneMode.Additive);
-            while (!op.isDone)
-            {
-                yield return new WaitForEndOfFrame();
-            }
-            Debug.Log("Load Level Completed");
-
-            car.gameObject.SetActive(true);
-            CarPath path = FindObjectOfType<CarPath>();
-            car.StartPathFollowing(path);
-
-            tornado.gameObject.SetActive(true);
-            TornadoStartPoint tornadoStartPoint = FindObjectOfType<TornadoStartPoint>();
-            tornado.transform.position = tornadoStartPoint.transform.position;
-
-            //wait for finish
-            finished = false;
-            while (!finished)
-            {
-                yield return new WaitForEndOfFrame();
-            }
-
-            car.StopPathFollowing();
-            CleanUI();
-            levelFinishedUIObject.SetActive(true);
-            yield return new WaitForSeconds(1.5f);
-            CleanUI();
-
-            car.gameObject.SetActive(false);
-            tornado.gameObject.SetActive(false);
-
-            op = SceneManager.UnloadSceneAsync(levels[0], UnloadSceneOptions.None);
+            op = SceneManager.UnloadSceneAsync(currentlyLoadedLevelName, UnloadSceneOptions.None);
 
             while (!op.isDone)
             {
@@ -70,56 +74,38 @@ public class GameDirector : MonoBehaviour
         }
         
 
-        //foreach level
-        //load Level
-        //wait for finish or gameover
-
-        //on game over, restart game
-        //on level finish contunie
-    }
-
-
-    public IEnumerator LoadLevel(string levelName)
-    {
-        AsyncOperation op = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
-
+        op = SceneManager.LoadSceneAsync(newlevel, LoadSceneMode.Additive);
         while (!op.isDone)
         {
             yield return new WaitForEndOfFrame();
         }
-
         Debug.Log("Load Level Completed");
 
-    }
+        currentlyLoadedLevelName = newlevel;
 
-    public IEnumerator UnloadLevel(string levelName)
-    {
-        AsyncOperation op = SceneManager.UnloadSceneAsync(levelName, UnloadSceneOptions.None);
+        car.gameObject.SetActive(true);
+        CarPath path = FindObjectOfType<CarPath>();
+        car.StartPathFollowing(path);
 
-        while (!op.isDone)
-        {
-            yield return new WaitForEndOfFrame();
-        }
+        tornado.gameObject.SetActive(true);
+        TornadoStartPoint tornadoStartPoint = FindObjectOfType<TornadoStartPoint>();
+        tornado.transform.position = tornadoStartPoint.transform.position;
 
-        Debug.Log("Unload Level Completed");
-    }
-
-    public void LevelFinished()
-    {
-        finished = true;
+        switchingLevel = false;
     }
 
     public void GameOver()
     {
+        car.StopPathFollowing();
         CleanUI();
         gameOverUIObject.SetActive(true);
+
+        //laod first level
+        currentLevelCount = 0;
+        StartCoroutine(SwitchLevel(levels[currentLevelCount], 1.5f));
+
     }
 
-    public void GameFinished()
-    {
-        CleanUI();
-        gameFinishedUIObject.SetActive(true);
-    }
 
     public void CleanUI()
     {
