@@ -47,5 +47,9 @@ public class Car : MonoBehaviour
         gameDirector.GameOver();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        gameDirector.GameOver();
+    }
 
 }

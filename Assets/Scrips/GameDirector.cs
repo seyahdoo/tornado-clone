@@ -11,9 +11,15 @@ public class GameDirector : MonoBehaviour
 
     }
 
+
+    public void LevelFinished()
+    {
+        print("Level Finished");
+    }
+
     public void GameOver()
     {
-
+        print("Game Over");
     }
 
 
