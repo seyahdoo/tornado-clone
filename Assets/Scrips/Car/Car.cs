@@ -10,6 +10,7 @@ public class Car : MonoBehaviour
     public GameSettings gameSettings;
     public CarPath path;
     public GameDirector gameDirector;
+    public SmoothFollow cameraSmoothFollow;
 
     public float guideDistance = 1f;
 
@@ -26,6 +27,8 @@ public class Car : MonoBehaviour
         guide.position = tr.position;
         guide.LookAt(path.checkpoints[checkpointCount].transform);
         guide.position += guide.forward * guideDistance;
+
+        cameraSmoothFollow.TeleportToDestination();
     }
 
     public void StopPathFollowing()
