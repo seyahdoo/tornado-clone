@@ -24,29 +24,6 @@ public class GameDirector : MonoBehaviour
         StartCoroutine(SwitchLevel(levels[0], 0f));
     }
 
-
-    public void LevelFinished()
-    {
-        car.StopPathFollowing();
-        CleanUI();
-
-        //load next level
-        //if there is no next level -> GameFinished()
-        currentLevelCount++;
-        if(currentLevelCount >= levels.Length)
-        {
-            gameFinishedUIObject.SetActive(true);
-            return;
-        }
-        else
-        {
-            levelFinishedUIObject.SetActive(true);
-        }
-
-        StartCoroutine(SwitchLevel(levels[currentLevelCount], 1.5f));
-    }
-
-
     public IEnumerator SwitchLevel(string newlevel, float delay)
     {
         if (switchingLevel) yield break;
@@ -94,6 +71,27 @@ public class GameDirector : MonoBehaviour
         switchingLevel = false;
     }
 
+    public void LevelFinished()
+    {
+        car.StopPathFollowing();
+        CleanUI();
+
+        //load next level
+        //if there is no next level -> GameFinished()
+        currentLevelCount++;
+        if (currentLevelCount >= levels.Length)
+        {
+            gameFinishedUIObject.SetActive(true);
+            return;
+        }
+        else
+        {
+            levelFinishedUIObject.SetActive(true);
+        }
+
+        StartCoroutine(SwitchLevel(levels[currentLevelCount], 1.5f));
+    }
+
     public void GameOver()
     {
         car.StopPathFollowing();
@@ -106,13 +104,11 @@ public class GameDirector : MonoBehaviour
 
     }
 
-
     public void CleanUI()
     {
         gameOverUIObject.SetActive(false);
         gameFinishedUIObject.SetActive(false);
         levelFinishedUIObject.SetActive(false);
     }
-
 
 }
