@@ -20,6 +20,9 @@ public class Car : MonoBehaviour
     {
         this.path = path;
         followingPath = true;
+        checkpointCount = 1;
+        tr.position = path.checkpoints[0].transform.position;
+        tr.LookAt(path.checkpoints[checkpointCount].transform);
         guide.position = tr.position;
         guide.LookAt(path.checkpoints[checkpointCount].transform);
         guide.position += guide.forward * guideDistance;
@@ -28,6 +31,7 @@ public class Car : MonoBehaviour
     public void StopPathFollowing()
     {
         followingPath = false;
+        path = null;
     }
 
     private void Update()

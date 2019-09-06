@@ -8,14 +8,29 @@ public class GameDirector : MonoBehaviour
 
     public string[] levels;
 
-    public void LoadLevel(string levelName)
+    public IEnumerator LoadLevel(string levelName)
     {
-        SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
+        AsyncOperation op = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
+
+        while (!op.isDone)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        Debug.Log("Load Level Completed");
+
     }
 
-    public void UnloadLevel(string levelName)
+    public IEnumerator UnloadLevel(string levelName)
     {
-        SceneManager.UnloadSceneAsync(levelName, UnloadSceneOptions.None);
+        AsyncOperation op = SceneManager.UnloadSceneAsync(levelName, UnloadSceneOptions.None);
+
+        while (!op.isDone)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        Debug.Log("Unload Level Completed");
     }
 
     private void Update()
@@ -23,12 +38,12 @@ public class GameDirector : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            LoadLevel(levels[0]);
+            StartCoroutine(LoadLevel(levels[0]));
         }
 
         if (Input.GetKeyDown(KeyCode.U))
         {
-            UnloadLevel(levels[0]);
+            StartCoroutine(UnloadLevel(levels[0]));
         }
 
 
