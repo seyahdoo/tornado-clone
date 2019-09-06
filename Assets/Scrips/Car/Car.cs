@@ -13,33 +13,43 @@ public class Car : MonoBehaviour
 
     public float guideDistance = 1f;
 
+    private bool followingPath = false;
     private int checkpointCount = 0;
 
-    private void Start()
+    public void StartPathFollowing(CarPath path)
     {
+        this.path = path;
+        followingPath = true;
         guide.position = tr.position;
         guide.LookAt(path.checkpoints[checkpointCount].transform);
         guide.position += guide.forward * guideDistance;
     }
 
+    public void StopPathFollowing()
+    {
+        followingPath = false;
+    }
+
     private void Update()
     {
-        Transform target = path.checkpoints[checkpointCount].transform;
-
-        if (Vector3.Distance(target.position, guide.position) < (gameSettings.carSpeed * Time.deltaTime))
+        if(followingPath)
         {
-            checkpointCount += 1;
-            checkpointCount %= path.checkpoints.Length;
+            Transform target = path.checkpoints[checkpointCount].transform;
+
+            if (Vector3.Distance(target.position, guide.position) < (gameSettings.carSpeed * Time.deltaTime))
+            {
+                checkpointCount += 1;
+                checkpointCount %= path.checkpoints.Length;
+            }
+
+            guide.LookAt(target);
+            guide.position += guide.forward * gameSettings.carSpeed * Time.deltaTime;
+
+            tr.LookAt(guide);
+            tr.position += tr.forward * gameSettings.carSpeed * Time.deltaTime;
+
+            guide.position += guide.forward * (guideDistance - Vector3.Distance(guide.position, tr.position));
         }
-
-        guide.LookAt(target);
-        guide.position += guide.forward * gameSettings.carSpeed * Time.deltaTime;
-
-        tr.LookAt(guide);
-        tr.position += tr.forward * gameSettings.carSpeed * Time.deltaTime;
-
-        guide.position += guide.forward * (guideDistance - Vector3.Distance(guide.position, tr.position));
-
     }
 
     private void OnCollisionEnter(Collision collision)
