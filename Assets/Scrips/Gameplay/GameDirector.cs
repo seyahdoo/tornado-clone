@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 public class GameDirector : MonoBehaviour
 {
 
-    public string[] levels;
+    public GameSettings gameSettings;
 
     private int currentLevelCount = 0;
-    public string currentlyLoadedLevelName = "";
+    public string currentlyLoadedLevelPath = "";
     private bool switchingLevel = false;
 
     public GameObject levelFinishedUIObject;
@@ -21,10 +21,10 @@ public class GameDirector : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SwitchLevel(levels[0], 0f));
+        StartCoroutine(SwitchLevel(gameSettings.levels[0], 0f));
     }
 
-    public IEnumerator SwitchLevel(string newlevel, float delay)
+    public IEnumerator SwitchLevel(SceneReference newlevel, float delay)
     {
         if (switchingLevel) yield break;
 
@@ -38,27 +38,24 @@ public class GameDirector : MonoBehaviour
 
         AsyncOperation op;
 
-        if(currentlyLoadedLevelName.Length > 0)
+        if(currentlyLoadedLevelPath.Length >= 1)
         {
-            op = SceneManager.UnloadSceneAsync(currentlyLoadedLevelName, UnloadSceneOptions.None);
+            op = SceneManager.UnloadSceneAsync(currentlyLoadedLevelPath, UnloadSceneOptions.None);
 
             while (!op.isDone)
             {
                 yield return new WaitForEndOfFrame();
             }
 
-            Debug.Log("Unload Level Completed");
         }
-        
 
-        op = SceneManager.LoadSceneAsync(newlevel, LoadSceneMode.Additive);
+        op = SceneManager.LoadSceneAsync(newlevel.ScenePath, LoadSceneMode.Additive);
         while (!op.isDone)
         {
             yield return new WaitForEndOfFrame();
         }
-        Debug.Log("Load Level Completed");
 
-        currentlyLoadedLevelName = newlevel;
+        currentlyLoadedLevelPath = newlevel.ScenePath;
 
         car.gameObject.SetActive(true);
         CarPath path = FindObjectOfType<CarPath>();
@@ -79,7 +76,7 @@ public class GameDirector : MonoBehaviour
         //load next level
         //if there is no next level -> GameFinished()
         currentLevelCount++;
-        if (currentLevelCount >= levels.Length)
+        if (currentLevelCount >= gameSettings.levels.Length)
         {
             gameFinishedUIObject.SetActive(true);
             return;
@@ -89,7 +86,7 @@ public class GameDirector : MonoBehaviour
             levelFinishedUIObject.SetActive(true);
         }
 
-        StartCoroutine(SwitchLevel(levels[currentLevelCount], 1.5f));
+        StartCoroutine(SwitchLevel(gameSettings.levels[currentLevelCount], 1.5f));
     }
 
     public void GameOver()
@@ -100,7 +97,7 @@ public class GameDirector : MonoBehaviour
 
         //laod first level
         currentLevelCount = 0;
-        StartCoroutine(SwitchLevel(levels[currentLevelCount], 1.5f));
+        StartCoroutine(SwitchLevel(gameSettings.levels[currentLevelCount], 1.5f));
 
     }
 

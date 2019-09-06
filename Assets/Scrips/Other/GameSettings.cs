@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "DefaultGameSettings", menuName = "ScriptableObjects/GameSettings", order = 1)]
 public class GameSettings : ScriptableObject
@@ -11,6 +12,6 @@ public class GameSettings : ScriptableObject
     public float tornadoEffectDistance;
     public float tornadoEffectPower;
 
-
+    public SceneReference[] levels;
 
 }
