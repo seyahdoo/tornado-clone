@@ -13,14 +13,17 @@ public class Tornado : MonoBehaviour
     {
         foreach (Flyable flyable in flyableRuntimeSet.flyables)
         {
-            flyable.rb.AddForce
+            if(Vector3.Distance(flyable.tr.position, tr.position) < gameSettings.tornadoEffectDistance)
+            {
+                flyable.EnablePhysics();
+                flyable.rb.AddForce
                 (
                     (flyable.tr.position - tr.position).normalized
                     * (Mathf.Clamp(gameSettings.tornadoEffectDistance / Vector3.Distance(flyable.tr.position, tr.position), 1f, float.MaxValue) - 1f)
                     * gameSettings.tornadoEffectPower
                     , ForceMode.Force
                 );
-
+            }
         }
     }
 }
