@@ -14,11 +14,15 @@ public class TornadoController : MonoBehaviour
 
     public GameSettings gameSettings;
 
+    private void OnEnable()
+    {
+        oldMousePositon = Input.mousePosition;
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            touchStartMousePosition = Input.mousePosition;
             oldMousePositon = Input.mousePosition;
         }
 
@@ -30,7 +34,7 @@ public class TornadoController : MonoBehaviour
         }
 
         Vector3 posChangeForThisFrame =
-            cam.forward.normalized * (mouseDelta.y / Screen.height) * gameSettings.tornadoControllYSpeed
+            cam.forward.normalized * (((mouseDelta.y / Screen.height) * gameSettings.tornadoControllYSpeed) + gameSettings.tornadoStaticForwardSpeed)
             + cam.right.normalized * (mouseDelta.x / Screen.width ) * gameSettings.tornadoControllXSpeed;
 
         posChangeForThisFrame.y = 0f;

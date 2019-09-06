@@ -20,6 +20,7 @@ public class GameDirector : MonoBehaviour
     public GameObject touchToStartUIObject;
 
     public Tornado tornado;
+    public TornadoController tornadoController;
     public Car car;
 
     private void Start()
@@ -64,6 +65,7 @@ public class GameDirector : MonoBehaviour
         CarPath path = FindObjectOfType<CarPath>();
         car.SetNewPath(path);
 
+        tornadoController.enabled = false;
         tornado.gameObject.SetActive(true);
         TornadoStartPoint tornadoStartPoint = FindObjectOfType<TornadoStartPoint>();
         tornado.transform.position = tornadoStartPoint.transform.position;
@@ -83,6 +85,7 @@ public class GameDirector : MonoBehaviour
             {
                 waitingForTouchToStart = false;
                 car.StartPathFollowing();
+                tornadoController.enabled = true;
                 CleanUI();
             }
         }

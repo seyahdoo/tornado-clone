@@ -15,9 +15,10 @@ MonoBehaviour:
   carSpeed: 2
   tornadoEffectDistance: 2
   tornadoEffectPower: 1700
-  tornadoControllSpeed: 200
+  tornadoControllSpeed: 300
   tornadoControllXSpeed: 1
   tornadoControllYSpeed: 5
+  tornadoStaticForwardSpeed: 0.01
   levels:
   - sceneAsset: {fileID: 102900000, guid: fb21eafe815492e449aaf78f69458203, type: 3}
     scenePath: Assets/Scenes/Level1.unity
