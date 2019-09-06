@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09a993e6886a1684a9a4f13bcb08ab0e, type: 3}
   m_Name: DefaultGameSettings
   m_EditorClassIdentifier: 
-  carSpeed: 1
+  carSpeed: 2
   tornadoEffectDistance: 2
   tornadoEffectPower: 2000

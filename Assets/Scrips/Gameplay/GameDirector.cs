@@ -9,7 +9,7 @@ public class GameDirector : MonoBehaviour
     public string[] levels;
 
     private int currentLevelCount = 0;
-    private string currentlyLoadedLevelName = "";
+    public string currentlyLoadedLevelName = "";
     private bool switchingLevel = false;
 
     public GameObject levelFinishedUIObject;
