@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: DefaultGameSettings
   m_EditorClassIdentifier: 
   carSpeed: 2
+  carGuideDistance: 1
   tornadoEffectDistance: 2
-  tornadoEffectPower: 1700
+  tornadoEffectPower: 300
   tornadoControllSpeed: 300
   tornadoControllXSpeed: 1
   tornadoControllYSpeed: 5
