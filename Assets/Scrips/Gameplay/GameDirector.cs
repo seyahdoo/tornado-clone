@@ -102,7 +102,6 @@ public class GameDirector : MonoBehaviour
     {
         //Pause Game
         car.StopPathFollowing();
-        tornadoController.enabled = false;
 
         //load next level
         //if there is no next level -> "Game Finished"
@@ -115,6 +114,9 @@ public class GameDirector : MonoBehaviour
         }
         else
         {
+            //Let tornado touch the car to reset the game (this bug is intentional)
+            tornadoController.enabled = false;
+
             //"LEVEL FINISHED" text
             ClearUI();
             levelFinishedUIObject.SetActive(true);
