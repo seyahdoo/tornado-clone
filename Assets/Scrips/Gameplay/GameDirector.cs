@@ -1,11 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameDirector : MonoBehaviour
 {
-
     public GameSettings gameSettings;
 
     private int currentLevelCount = 0;

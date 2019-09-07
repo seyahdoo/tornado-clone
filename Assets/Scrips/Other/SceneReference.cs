@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -514,7 +513,7 @@ public class SceneReferencePropertyDrawer : PropertyDrawer
             }
 
             EditorBuildSettingsScene newScene = new EditorBuildSettingsScene(buildScene.assetGUID, enabled);
-            List<EditorBuildSettingsScene> tempScenes = EditorBuildSettings.scenes.ToList();
+            List<EditorBuildSettingsScene> tempScenes = new List<EditorBuildSettingsScene>(EditorBuildSettings.scenes);
             tempScenes.Add(newScene);
             EditorBuildSettings.scenes = tempScenes.ToArray();
         }
@@ -568,7 +567,7 @@ public class SceneReferencePropertyDrawer : PropertyDrawer
             // User chose to fully remove the scene from build settings
             else
             {
-                List<EditorBuildSettingsScene> tempScenes = EditorBuildSettings.scenes.ToList();
+                List<EditorBuildSettingsScene> tempScenes = new List<EditorBuildSettingsScene>(EditorBuildSettings.scenes);
                 tempScenes.RemoveAll(scene => scene.guid.Equals(buildScene.assetGUID));
                 EditorBuildSettings.scenes = tempScenes.ToArray();
             }
