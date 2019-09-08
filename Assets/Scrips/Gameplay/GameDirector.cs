@@ -30,7 +30,7 @@ public class GameDirector : MonoBehaviour
 
     public IEnumerator SwitchLevel(SceneReference newlevel, float delay)
     {
-        //dont reenter this routine while its working
+        //dont re-enter this routine while its working
         if (switchingLevel) yield break;
         switchingLevel = true;
 
@@ -78,7 +78,7 @@ public class GameDirector : MonoBehaviour
         ClearUI();
         touchToStartUIObject.SetActive(true);
 
-        //reenter semaphore released
+        //re-enter semaphore released
         switchingLevel = false;
     }
 
@@ -102,29 +102,31 @@ public class GameDirector : MonoBehaviour
     {
         //Pause Game
         car.StopPathFollowing();
+        tornadoController.enabled = false;
 
         //load next level
-        //if there is no next level -> "Game Finished"
+        //if there is no next level -> "Game Finished", "Restart Game"
         currentLevelCount++;
         if (currentLevelCount >= gameSettings.levels.Length)
         {
+            //restart game
+            currentLevelCount = 0;
+
             //"GAME FINISHED" text
             ClearUI();
             gameFinishedUIObject.SetActive(true);
         }
         else
         {
-            //Let tornado touch the car to reset the game (this bug is intentional)
-            tornadoController.enabled = false;
-
             //"LEVEL FINISHED" text
             ClearUI();
             levelFinishedUIObject.SetActive(true);
+        }
 
-            StartCoroutine(
+        //load next level
+        StartCoroutine(
                 SwitchLevel(
                     gameSettings.levels[currentLevelCount], 1.5f));
-        }
 
     }
 
@@ -138,8 +140,7 @@ public class GameDirector : MonoBehaviour
         ClearUI();
         gameOverUIObject.SetActive(true);
 
-        //laod first level
-        currentLevelCount = 0;
+        //reload level
         StartCoroutine(
             SwitchLevel(
                 gameSettings.levels[currentLevelCount], 1.5f));

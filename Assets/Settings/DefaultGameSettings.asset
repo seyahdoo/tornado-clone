@@ -21,9 +21,9 @@ MonoBehaviour:
   tornadoControllYSpeed: 5
   tornadoStaticForwardSpeed: 0.01
   levels:
-  - sceneAsset: {fileID: 102900000, guid: fb21eafe815492e449aaf78f69458203, type: 3}
-    scenePath: Assets/Scenes/Level1.unity
   - sceneAsset: {fileID: 102900000, guid: 81e04525630ce6c4cacb096f8ee50ffa, type: 3}
+    scenePath: Assets/Scenes/Level1.unity
+  - sceneAsset: {fileID: 102900000, guid: fb21eafe815492e449aaf78f69458203, type: 3}
     scenePath: Assets/Scenes/Level2.unity
   - sceneAsset: {fileID: 102900000, guid: aa6f026981ac0ac4eb33705d13d8e05b, type: 3}
     scenePath: Assets/Scenes/Level3.unity
