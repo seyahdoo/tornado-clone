@@ -30,13 +30,20 @@ public class TornadoController : MonoBehaviour
             oldMousePositon = currentMousePosition;
         }
 
-        Vector3 posChangeForThisFrame =
-            cam.forward.normalized * (((mouseDelta.y / Screen.height) * gameSettings.tornadoControllYSpeed) + gameSettings.tornadoStaticForwardSpeed)
-            + cam.right.normalized * (mouseDelta.x / Screen.width ) * gameSettings.tornadoControllXSpeed;
+        Vector3 speed =
+            cam.forward.normalized * 
+                (((mouseDelta.y / Screen.height) * gameSettings.tornadoControllYSpeed
+                    * gameSettings.tornadoControllSpeed)
+                    + gameSettings.tornadoStaticForwardSpeed)
+            
+            + cam.right.normalized * 
+                (mouseDelta.x / Screen.width ) * gameSettings.tornadoControllXSpeed 
+                    * gameSettings.tornadoControllSpeed;
 
-        posChangeForThisFrame.y = 0f;
 
-        tr.position += posChangeForThisFrame * gameSettings.tornadoControllSpeed * Time.deltaTime;
+        speed.y = 0f;
+
+        tr.position += speed * Time.deltaTime;
 
     }
 
